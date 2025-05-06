@@ -34,7 +34,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       set({ trades: response.trades, loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch trades', loading: false });
-      console.error('Error fetching trades:', error);
     }
   },
 
@@ -45,7 +44,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       set({ openTrades: response.trades, loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch open trades', loading: false });
-      console.error('Error fetching open trades:', error);
     }
   },
 
@@ -56,7 +54,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       set({ closedTrades: response.trades, loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch closed trades', loading: false });
-      console.error('Error fetching closed trades:', error);
     }
   },
 
@@ -74,7 +71,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       });
     } catch (error) {
       set({ error: 'Failed to fetch PNL', loading: false });
-      console.error('Error fetching PNL:', error);
     }
   },
 
@@ -87,7 +83,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       set({ loading: false });
     } catch (error) {
       set({ error: 'Failed to create trade', loading: false });
-      console.error('Error creating trade:', error);
     }
   },
 
@@ -103,7 +98,6 @@ export const useTradeStore = create<TradeState>((set, get) => ({
       set({ loading: false });
     } catch (error) {
       set({ error: 'Failed to close trade', loading: false });
-      console.error('Error closing trade:', error);
     }
   },
 })); 

@@ -22,7 +22,6 @@ export const useWireStore = create<WireState>((set) => ({
       set({ loading: false });
     } catch (error) {
       set({ error: 'Failed to create wire transfer', loading: false });
-      console.error('Error creating wire transfer:', error);
     }
   },
 })); 

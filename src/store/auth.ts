@@ -20,7 +20,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.setItem('token', response.token);
       set({ token: response.token, isAuthenticated: true });
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   },
@@ -31,7 +30,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.setItem('token', response.token);
       set({ token: response.token, isAuthenticated: true });
     } catch (error) {
-      console.error('Signup failed:', error);
       throw error;
     }
   },

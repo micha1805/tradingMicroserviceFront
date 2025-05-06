@@ -1,6 +1,147 @@
 # Trading Microservice Frontend
 
-A modern trading platform frontend built with Next.js 14, TypeScript, Tailwind CSS, and Zustand for state management.
+A Next.js-based frontend application for the trading microservice platform.
+
+## Environment Setup
+
+The application supports four different environments:
+
+1. Local with mocks (`dev:mock`)
+2. Local without mocks (`dev:nomock`)
+3. Staging (`dev:staging`)
+4. Production (`dev:prod`)
+
+### Environment Files
+
+Create the following environment files in your project root:
+
+```bash
+.env.local.mock      # Local development with mock API
+.env.local.nomock    # Local development with real API
+.env.staging         # Staging environment
+.env.production      # Production environment
+```
+
+The appropriate environment file will be copied to `.env.local` when running the corresponding npm script. Next.js will then automatically load the environment variables from `.env.local`.
+
+Example environment file structure:
+```env
+NEXT_PUBLIC_API_URL=<api-url>
+NEXT_PUBLIC_USE_MOCK=true|false
+```
+
+### Available Scripts
+
+Development:
+```bash
+# Run locally with mock API
+npm run dev:mock
+
+# Run locally with real API
+npm run dev:nomock
+
+# Run with staging configuration
+npm run dev:staging
+
+# Run with production configuration
+npm run dev:prod
+```
+
+Build and Start:
+```bash
+# Build for staging
+npm run build:staging
+
+# Build for production
+npm run build:prod
+
+# Start staging build
+npm run start:staging
+
+# Start production build
+npm run start:prod
+```
+
+Other Commands:
+```bash
+# Run linter
+npm run lint
+```
+
+## Mock Data & Features
+
+When running in mock mode (`dev:mock`), the application provides a fully functional experience without requiring a backend connection.
+
+### Mock Data Includes
+
+- **User Profile**: 
+  - Email: `test@example.com`
+  - Password: `password`
+  - Name: John Doe
+  - Full profile information
+
+- **Trading Data**:
+  - Initial Balance: $1,000.00
+  - Open Trades:
+    - AAPL: 100 shares at $187.50
+    - GOOGL: 50 shares at $1,412.00
+    - MSFT: 75 shares at $410.50
+  - Closed Trades:
+    - TSLA: 30 shares (Profit)
+    - NVDA: 25 shares (Loss)
+    - META: 40 shares (Loss)
+
+### Mock Features
+
+All features work with mock data:
+- Authentication (login/signup)
+- Trading operations
+- Balance tracking
+- P&L calculations
+- Wire transfers
+
+## Dependencies
+
+- Next.js 14.1.0
+- React 18.2.0
+- Tailwind CSS
+- HeadlessUI
+- Axios
+- React Hook Form
+- Zustand
+
+## Development
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create the necessary environment files as described above
+4. Run the development server with your preferred environment configuration
+
+## Best Practices
+
+- Never commit environment files to the repository
+- Use `.env.example` as a template for required environment variables
+- Always use the appropriate environment script for your development context
+
+## Project Structure
+
+```
+├── .env.local.mock      # Local mock environment config
+├── .env.local.nomock    # Local real API environment config
+├── .env.staging         # Staging environment config
+├── .env.production      # Production environment config
+├── src/
+│   ├── app/            # Next.js app directory
+│   ├── components/     # React components
+│   └── lib/           # Utilities and API clients
+│       ├── api.ts     # API client with real/mock switching
+│       └── mockApi.ts # Mock implementations
+├── public/             # Static files
+└── package.json        # Project dependencies and scripts
+```
 
 ## Features
 
@@ -29,74 +170,25 @@ cd tradingMicroserviceFront
 2. Install dependencies:
 ```bash
 pnpm install
+# or
+npm install
 ```
 
-3. Set up environment:
-
-Create a `.env.local` file in the project root:
-
-```env
-# For mock data (recommended for development)
-NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
-NEXT_PUBLIC_ENABLE_MOCK=true
-
-# For real API (when ready)
-# NEXT_PUBLIC_API_URL=your-api-url
-# NEXT_PUBLIC_ENABLE_MOCK=false
-```
-
-4. Start the development server:
+3. Create the necessary environment files as described above
+4. Run the development server with your preferred environment configuration:
 ```bash
-pnpm dev
+# Using pnpm
+pnpm dev:mock      # Local with mocks
+pnpm dev:nomock    # Local without mocks
+pnpm dev:staging   # Staging environment
+pnpm dev:prod      # Production environment
+
+# Or using npm
+npm run dev:mock
+npm run dev:nomock
+npm run dev:staging
+npm run dev:prod
 ```
-
-The application will be available at `http://localhost:3000`.
-
-## Development with Mock Data
-
-The application includes a comprehensive mock implementation that simulates all API endpoints. This is useful for development and testing without a backend.
-
-### Mock Credentials
-
-Use these credentials to log in:
-- Email: `test@example.com`
-- Password: `password`
-
-### Mock Data Includes
-
-- **User Profile**: John Doe with complete profile information
-- **Balance**: $1,000.00 initial balance
-- **Open Trades**:
-  - AAPL: 100 shares at $187.50
-  - GOOGL: 50 shares at $1,412.00
-  - MSFT: 75 shares at $410.50
-- **Closed Trades**:
-  - TSLA: 30 shares (Profit)
-  - NVDA: 25 shares (Profit)
-  - META: 40 shares (Loss)
-- **Wire Transfers**: Fully mocked functionality
-
-### Features Available in Mock Mode
-
-1. **Authentication**
-   - Login/Signup with mock credentials
-   - Token-based authentication simulation
-   - Protected routes
-
-2. **Trading**
-   - View open positions
-   - Create new trades
-   - Close existing trades
-   - Real-time P&L calculations
-
-3. **Portfolio Management**
-   - View current balance
-   - Track open and closed positions
-   - Monitor P&L
-
-4. **Wire Transfers**
-   - Deposit funds
-   - Transaction history
 
 ## Project Structure
 
@@ -107,28 +199,11 @@ src/
 │   └── dashboard/      # Dashboard and trading pages
 ├── components/         # Reusable React components
 ├── lib/               # Utilities and API clients
+│   ├── api.ts         # API client with real/mock switching
+│   └── mockApi.ts     # Mock implementations
 ├── store/             # Zustand state management
 └── types/             # TypeScript type definitions
 ```
-
-## Available Scripts
-
-- `pnpm dev`: Start development server
-- `pnpm build`: Build for production
-- `pnpm start`: Run production build
-- `pnpm lint`: Run ESLint
-
-## Switching to Real API
-
-1. Update `.env.local`:
-```env
-NEXT_PUBLIC_API_URL=your-api-url
-NEXT_PUBLIC_ENABLE_MOCK=false
-```
-
-2. Restart the development server
-
-The application will now use the real API endpoints instead of mock data.
 
 ## Contributing
 

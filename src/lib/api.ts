@@ -26,22 +26,50 @@ import type {
 
 const api = axios.create({
   baseURL: config.api.baseURL,
+  withCredentials: true,  // Required for CORS with credentials
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': '*/*'
+  }
 });
 
-// Add a request interceptor to add the auth token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = token;
+api.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
+
+api.interceptors.response.use(
+  response => response,
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 // Real API implementations
 const realAuth = {
   login: async (data: LoginRequest) => {
-    const response = await api.get<AuthenticationResponse>('/auth/login', { params: data });
-    return response.data;
+    try {
+      const response = await api({
+        method: 'POST',
+        url: '/auth/login',
+        data: {
+          email: data.email,
+          password: data.password
+        },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   },
   signup: async (data: SignupRequest) => {
     const response = await api.post<AuthenticationResponse>('/auth/signup', data);
@@ -90,7 +118,7 @@ const realTrade = {
     return response.data;
   },
   getAllTrades: async () => {
-    const response = await api.get<TradeIndexResponse>('/trade/index');
+    const response = await api.get<TradeIndexResponse>('/trades/index');
     return response.data;
   },
   getOpenTrades: async () => {

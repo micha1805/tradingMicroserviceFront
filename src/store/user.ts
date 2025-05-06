@@ -25,7 +25,6 @@ export const useUserStore = create<UserState>((set) => ({
       set({ profile: profileData, loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch profile', loading: false });
-      console.error('Error fetching profile:', error);
     }
   },
 
@@ -36,7 +35,6 @@ export const useUserStore = create<UserState>((set) => ({
       set({ balance: balanceData.currentBalanceInCent, loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch balance', loading: false });
-      console.error('Error fetching balance:', error);
     }
   },
 
@@ -48,7 +46,6 @@ export const useUserStore = create<UserState>((set) => ({
       set({ profile: profileData, loading: false });
     } catch (error) {
       set({ error: 'Failed to update profile', loading: false });
-      console.error('Error updating profile:', error);
     }
   },
 })); 

@@ -4,8 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:mock": "cp .env.local.mock .env.local && next dev",
+    "dev:nomock": "cp .env.local.nomock .env.local && next dev",
+    "dev:staging": "cp .env.staging .env.local && next dev",
+    "dev:prod": "cp .env.production .env.local && next dev",
     "build": "next build",
+    "build:staging": "cp .env.staging .env.local && next build",
+    "build:prod": "cp .env.production .env.local && next build",
     "start": "next start",
+    "start:staging": "cp .env.staging .env.local && next start",
+    "start:prod": "cp .env.production .env.local && next start",
     "lint": "next lint"
   },
   "dependencies": {
